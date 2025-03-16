@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -6,6 +7,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager _instance;
 
+    private UI_Manager _uiManager;
+
     internal int _score;
 
     private int _record = 0;
@@ -13,6 +16,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _playerMovement = FindObjectOfType<PlayerMovement>();
+        _uiManager = FindObjectOfType<UI_Manager>();
 
         _record = PlayerPrefs.GetInt("Record");
     }
@@ -30,7 +34,8 @@ public class GameManager : MonoBehaviour
     public void Loss()
     {
         if (_score > _record) PlayerPrefs.SetInt("Record", _score);
+        CursorManager._instance.UpdateCursorState(CursorManager.CursorState.UnLocked);
 
-        SceneTransistion._instance.Restart();
+        StartCoroutine(_uiManager.OpenLossPanel());
     }
 }

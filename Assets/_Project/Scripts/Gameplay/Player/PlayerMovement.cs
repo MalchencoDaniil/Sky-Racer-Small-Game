@@ -42,6 +42,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Quaternion _targetRotation;
 
+    [Header("Particle")]
+    [SerializeField]
+    private GameObject _deathEffect;
+
     private void Start()
     {
         _distanceSinceLastIncrease = transform.position.z;
@@ -106,5 +110,12 @@ public class PlayerMovement : MonoBehaviour
         {
             _rigidbody.velocity = _rigidbody.velocity.normalized * _maxVelocity;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        GameManager._instance.Loss();
+        Instantiate(_deathEffect, transform.position, Quaternion.identity);
+        gameObject.SetActive(false);
     }
 }

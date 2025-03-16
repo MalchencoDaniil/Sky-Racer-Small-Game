@@ -18,7 +18,6 @@ public class SceneTransistion : MonoBehaviour
         if (InputManager._instance._inputActions.Game.Restart.triggered)
         {
             Restart();
-            GameManager._instance.Loss();
         }
     }
 
