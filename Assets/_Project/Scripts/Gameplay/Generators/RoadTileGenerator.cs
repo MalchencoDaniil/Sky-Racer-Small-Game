@@ -33,7 +33,12 @@ public class RoadTileGenerator : MonoBehaviour
         {
             int _spawnIndex = _spawnDirection == 0 ? (_startTilesCount - i) : i;
 
-            SpawnTile(new Vector3(0, 0, _tileLenght * _spawnDirection * _spawnIndex));
+            int _direction = _spawnDirection;
+
+            if (_direction == 0)
+                _direction = -1;
+
+            SpawnTile(new Vector3(0, 0, _tileLenght * _direction * _spawnIndex));
 
             if (_spawnDirection == 1 && i < _startTilesCount - 1)
                 _spawnDistance += _tileLenght;
@@ -63,7 +68,7 @@ public class RoadTileGenerator : MonoBehaviour
 
     private void SpawnTile(Vector3 _spawnPosition)
     {
-        Transform _roadTile = Instantiate(_roadTiles[0], _spawnPosition, Quaternion.identity);
+        Transform _roadTile = Instantiate(_roadTiles[Random.Range(0, _roadTiles.Count)], _spawnPosition, Quaternion.identity);
         _currentTiles.Add(_roadTile);
     }
 
